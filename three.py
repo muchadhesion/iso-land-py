@@ -23,7 +23,7 @@ def go(drawfn=default_drawfn):
         screen.fill((0,0,20))
 
         # draw the thing
-        drawfn(screen)
+        drawfn(screen, game_time_ms)
 
         pygame.display.flip()
         # check exit
