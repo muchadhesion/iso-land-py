@@ -1,5 +1,6 @@
 import three
 import pygame
+import pygame as pg
 import math
 
 top = [ (1,2), (0,1), (1,0), (2,1) ]
@@ -8,18 +9,23 @@ top_zoomed = [ (x*20,y*10) for (x,y) in top]
 origin = (200,200)
 
 map = pygame.image.load('map.png')
+map_z = pg.transform.scale(map, (200,200))
 
 BLOCK_COL = 0xff4000
 
 def draw(screen, t = 0):
-    pygame.draw.rect(screen, 0x0000ff, (100,100,200,200))
+    screen.blit( map_z, (100,100) )
+    
+    ox = int( 40 * math.sin(t/2000) + 50 )
+    oy = int( 40 * math.cos(t/1000) + 50 )
 
-    ox = int( 40 * math.sin(t/1000) + 50 )
+    pygame.draw.rect(screen, 0xffffff, (ox*2 + 100, oy*2 + 100, 20,20))
     for ix in range(10):
         for iy in range(10):
             x = ix + ox
-            h = map.get_at((x,iy))[0]
-            coladd = ix * 0x10 + iy * 0x1000
+            y = iy + oy
+            h = map.get_at((x,y))[0]
+            coladd = ((x * 0x10) & 0xff) + ((y * 0x1000) & 0xff00)
             block(screen, ix, iy, col= BLOCK_COL + coladd, height=h)
 
 def block(screen, x, y , col=0xffff00, height = 0):
