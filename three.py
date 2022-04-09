@@ -1,5 +1,6 @@
 
 import pygame
+import gc
 
 # pygame window params
 WINDOW_WIDTH=640
@@ -18,7 +19,7 @@ def go(drawfn=default_drawfn):
 
     global game_time_ms
     while running:
-        ms = clock.tick(60)
+        ms = clock.tick(30)
         game_time_ms += ms
         screen.fill((0,0,20))
 
